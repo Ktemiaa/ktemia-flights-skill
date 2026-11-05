@@ -1,0 +1,18 @@
+{
+  "name": "ktemia",
+  "description": "Ktemia flight search skill for Claude Code.",
+  "owner": {
+    "name": "Ktemia",
+    "email": "contact@ktemia.com",
+    "url": "https://www.ktemia.com"
+  },
+  "plugins": [
+    {
+      "name": "ktemia",
+      "source": "./",
+      "description": "Search and compare flights with the Ktemia flight search API.",
+      "category": "travel",
+      "tags": ["flights", "travel", "api"]
+    }
+  ]
+}
