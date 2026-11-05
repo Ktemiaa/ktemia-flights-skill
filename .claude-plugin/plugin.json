@@ -1,7 +1,7 @@
 {
   "name": "ktemia",
   "displayName": "Ktemia Flight Search",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Search and compare flights with the Ktemia flight search API: airport lookup, one-way, round trip, and multi-city search, fares from each seller, and booking links.",
   "author": {
     "name": "Ktemia",
@@ -11,5 +11,14 @@
   "homepage": "https://www.ktemia.com/docs/api/",
   "repository": "https://github.com/Ktemiaa/ktemia-flights-skill",
   "license": "MIT",
-  "keywords": ["flights", "flight-search", "flight-api", "travel", "airports", "skill"]
+  "keywords": [
+    "flights",
+    "flight-search",
+    "flight-api",
+    "travel",
+    "airports",
+    "skill",
+    "codex",
+    "cursor"
+  ]
 }

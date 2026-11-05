@@ -1,6 +1,6 @@
-# Ktemia Flight Search skill for Claude Code
+# Ktemia Flight Search skill for Claude Code, Codex, and Cursor
 
-A Claude Code skill that searches and compares flights with the [Ktemia](https://www.ktemia.com/) [flight search API](https://www.ktemia.com/docs/api/). Ask in plain language — "find me a nonstop from New York to Paris on 10 March, back on the 17th, for two" — and the agent looks up airport codes, runs the search, and returns fares from each seller with booking links.
+An agent skill that searches and compares flights with the [Ktemia](https://www.ktemia.com/) [flight search API](https://www.ktemia.com/docs/api/). Ask in plain language — "find me a nonstop from New York to Paris on 10 March, back on the 17th, for two" — and the agent looks up airport codes, runs the search, and returns fares from each seller with booking links.
 
 - **Airport lookup**: turns "Lisbon" into `LIS`, and asks when a name matches several cities
 - **One-way, round trip, and multi-city** search
@@ -12,21 +12,54 @@ Ktemia compares fares; it does not book tickets. The traveller books on the sell
 
 ## Install
 
-### As a Claude Code plugin
+Works in **Claude Code**, **Codex**, and **Cursor**. All three read the same `SKILL.md` format.
+
+### Claude Code
+
+As a plugin, from inside Claude Code:
 
 ```
 /plugin marketplace add Ktemiaa/ktemia-flights-skill
 /plugin install ktemia@ktemia
 ```
 
-### As a standalone skill
-
-Copy `skills/flight-search` into your skills folder:
+Or as a standalone skill:
 
 ```bash
-git clone https://github.com/Ktemiaa/ktemia-flights-skill.git
+git clone --depth 1 https://github.com/Ktemiaa/ktemia-flights-skill.git
+mkdir -p ~/.claude/skills
 cp -r ktemia-flights-skill/skills/flight-search ~/.claude/skills/
 ```
+
+### Codex
+
+Codex loads skills from `~/.agents/skills/` (every project) or `.agents/skills/` in a repository:
+
+```bash
+git clone --depth 1 https://github.com/Ktemiaa/ktemia-flights-skill.git
+mkdir -p ~/.agents/skills
+cp -r ktemia-flights-skill/skills/flight-search ~/.agents/skills/
+```
+
+Restart Codex, then ask for a flight search. The skill calls `api.ktemia.com`, so Codex may ask you to allow network access for those commands.
+
+### Cursor
+
+Cursor loads skills from `~/.cursor/skills/` or `~/.agents/skills/` (every project), or `.cursor/skills/` in a project:
+
+```bash
+git clone --depth 1 https://github.com/Ktemiaa/ktemia-flights-skill.git
+mkdir -p ~/.cursor/skills
+cp -r ktemia-flights-skill/skills/flight-search ~/.cursor/skills/
+```
+
+The skill appears under **Customize → Skills**. Use it from Agent chat, or type `/flight-search`.
+
+If you already installed it in `~/.agents/skills/` for Codex, Cursor finds it there too.
+
+### One project only
+
+To share the skill with everyone working in a repository, copy it into `.agents/skills/flight-search` in that repository and commit it. Codex and Cursor read that folder; for Claude Code, use `.claude/skills/flight-search`.
 
 ## Set up your API key
 
