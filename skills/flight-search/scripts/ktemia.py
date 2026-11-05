@@ -133,7 +133,7 @@ def main():
     p.add_argument("--max-price", type=int, help="per person")
     p.add_argument("--airlines", help="comma-separated airline codes")
     p.add_argument("--sort", choices=["bestValue", "price", "duration", "departure", "arrival"])
-    p.add_argument("--country", help="market country code, such as GB")
+    p.add_argument("--country", help="market country code such as GB; prices come back in that country's native currency")
 
     p = sub.add_parser("results", help="read a page of results")
     p.add_argument("token")

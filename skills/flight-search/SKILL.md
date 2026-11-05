@@ -46,7 +46,7 @@ Multi-city (legs in travel order, at least two):
 python3 scripts/ktemia.py search --leg LIS:BCN:2027-04-02 --leg BCN:FCO:2027-04-06 --leg FCO:LIS:2027-04-10
 ```
 
-Other options: `--cabin economy|premiumEconomy|business|first`, `--children N`, `--max-price N` (per person), `--airlines NH,JL`, `--country GB` (market, which sets the currency).
+Other options: `--cabin economy|premiumEconomy|business|first`, `--children N`, `--max-price N` (per person), `--airlines NH,JL`, `--country GB` (market; prices come back in that country’s native currency, so GB is GBP, DE is EUR, US is USD. Do not send a currency field).
 
 The search returns a `searchToken`, valid for 60 minutes. It does not return flights.
 
