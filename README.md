@@ -1,34 +1,38 @@
-# Ktemia Flight Search skill for Claude Code, Codex, and Cursor
+# Ktemia skills for Claude Code, Codex, and Cursor
 
-An agent skill that searches and compares flights with the [Ktemia](https://www.ktemia.com/) [flight search API](https://www.ktemia.com/docs/api/). Ask in plain language — "find me a nonstop from New York to Paris on 10 March, back on the 17th, for two" — and the agent looks up airport codes, runs the search, and returns fares from each seller with booking links.
+Agent skills that search and compare flights, rental cars, and hotels with the [Ktemia](https://www.ktemia.com/) [API](https://www.ktemia.com/docs/api/). Ask in plain language. The agent looks up the place, runs the search, and returns each seller's price with a booking link.
 
-- **Airport lookup**: turns "Lisbon" into `LIS`, and asks when a name matches several cities
-- **One-way, round trip, and multi-city** search
-- **Filters**: cabin, stops, airlines, budget, passengers, market
-- **Booking links**: each seller's booking page for the itinerary you pick
-- **Asks instead of guessing**: no invented cities or dates, so no wasted API calls
+| Skill | Use it for | Reference |
+| --- | --- | --- |
+| `flight-search` | One-way, round trip, and multi-city fares | [Flights](https://www.ktemia.com/docs/api/flights/search/) |
+| `car-search` | A hire at a city or airport | [Cars](https://www.ktemia.com/docs/api/cars/search/) |
+| `hotel-search` | A stay, plus guest reviews | [Hotels](https://www.ktemia.com/docs/api/hotels/search/) |
 
-Ktemia compares fares; it does not book tickets. The traveller books on the seller's site.
+Each skill asks when a place or a date is missing, instead of guessing. Ktemia compares prices. It does not book the ticket, the car, or the room. The traveller books on the seller's site.
 
 ## Install
 
-Works in **Claude Code**, **Codex**, and **Cursor**. All three read the same `SKILL.md` format.
+Works in **Claude Code**, **Codex**, and **Cursor**. All three read the same `SKILL.md` format. One plugin install loads all three skills. Copy a single folder when you only want one of them.
 
 ### Claude Code
 
 As a plugin, from inside Claude Code:
 
 ```
-/plugin marketplace add Ktemiaa/ktemia-flights-skill
+/plugin marketplace add Ktemiaa/ktemia-skills
 /plugin install ktemia@ktemia
 ```
 
-Or as a standalone skill:
+The old repository name still redirects, so an existing `Ktemiaa/ktemia-flights-skill` marketplace entry keeps resolving.
+
+Or as standalone skills:
 
 ```bash
-git clone --depth 1 https://github.com/Ktemiaa/ktemia-flights-skill.git
+git clone --depth 1 https://github.com/Ktemiaa/ktemia-skills.git
 mkdir -p ~/.claude/skills
-cp -r ktemia-flights-skill/skills/flight-search ~/.claude/skills/
+cp -r ktemia-skills/skills/flight-search ~/.claude/skills/
+cp -r ktemia-skills/skills/car-search ~/.claude/skills/
+cp -r ktemia-skills/skills/hotel-search ~/.claude/skills/
 ```
 
 ### Codex
@@ -36,74 +40,80 @@ cp -r ktemia-flights-skill/skills/flight-search ~/.claude/skills/
 Codex loads skills from `~/.agents/skills/` (every project) or `.agents/skills/` in a repository:
 
 ```bash
-git clone --depth 1 https://github.com/Ktemiaa/ktemia-flights-skill.git
+git clone --depth 1 https://github.com/Ktemiaa/ktemia-skills.git
 mkdir -p ~/.agents/skills
-cp -r ktemia-flights-skill/skills/flight-search ~/.agents/skills/
+cp -r ktemia-skills/skills/flight-search ~/.agents/skills/
+cp -r ktemia-skills/skills/car-search ~/.agents/skills/
+cp -r ktemia-skills/skills/hotel-search ~/.agents/skills/
 ```
 
-Restart Codex, then ask for a flight search. The skill calls `api.ktemia.com`, so Codex may ask you to allow network access for those commands.
+Restart Codex, then ask for a flight, a car, or a hotel. The skills call `api.ktemia.com`, so Codex may ask you to allow network access for those commands.
 
 ### Cursor
 
 Cursor loads skills from `~/.cursor/skills/` or `~/.agents/skills/` (every project), or `.cursor/skills/` in a project:
 
 ```bash
-git clone --depth 1 https://github.com/Ktemiaa/ktemia-flights-skill.git
+git clone --depth 1 https://github.com/Ktemiaa/ktemia-skills.git
 mkdir -p ~/.cursor/skills
-cp -r ktemia-flights-skill/skills/flight-search ~/.cursor/skills/
+cp -r ktemia-skills/skills/flight-search ~/.cursor/skills/
+cp -r ktemia-skills/skills/car-search ~/.cursor/skills/
+cp -r ktemia-skills/skills/hotel-search ~/.cursor/skills/
 ```
 
-The skill appears under **Customize → Skills**. Use it from Agent chat, or type `/flight-search`.
+The skills appear under **Customize → Skills**. Use them from Agent chat, or type `/flight-search`, `/car-search`, or `/hotel-search`.
 
-If you already installed it in `~/.agents/skills/` for Codex, Cursor finds it there too.
+If you already installed them in `~/.agents/skills/` for Codex, Cursor finds them there too.
 
 ### One project only
 
-To share the skill with everyone working in a repository, copy it into `.agents/skills/flight-search` in that repository and commit it. Codex and Cursor read that folder; for Claude Code, use `.claude/skills/flight-search`.
+To share the skills with everyone working in a repository, copy the folders into `.agents/skills/` in that repository and commit them. Codex and Cursor read that folder; for Claude Code, use `.claude/skills/`.
 
 ## Set up your API key
 
-The skill reads your key from `KTEMIA_API_KEY`:
+Every skill reads the same key from `KTEMIA_API_KEY`:
 
 ```bash
 export KTEMIA_API_KEY="your-key"
 ```
 
-How to get a key, and the plan limits, are on [authentication](https://www.ktemia.com/docs/api/#authentication) and [pricing](https://www.ktemia.com/pricing/). Every API call counts as one request: a search, each results page, and each details call.
+How to get a key, and the plan limits, are on [authentication](https://www.ktemia.com/docs/api/#authentication) and [pricing](https://www.ktemia.com/pricing/). Every API call counts as one request: a search, each results page, each details call, and each page of hotel reviews.
 
 ## Try it
 
 > Find flights from Lisbon to London on 15 March 2027.
 
-> Compare round trips from JFK to Paris, 10–17 March, two adults, at most one stop, cheapest first.
+> Hire a car at Lisbon airport, 10–17 March, automatic.
 
-> Multi-city: Lisbon → Barcelona on 2 April, Barcelona → Rome on 6 April, Rome → Lisbon on 10 April.
+> A hotel in London for two, 10–12 March, with free cancellation if you can find it. Then show recent reviews for the one I pick.
 
-## Use the client directly
+## Use the clients directly
 
-The skill bundles a small Python client with no dependencies:
+Each skill bundles a small Python client with no dependencies:
 
 ```bash
 python3 skills/flight-search/scripts/ktemia.py airports "Lisbon"
 python3 skills/flight-search/scripts/ktemia.py search --origin LIS --destination LHR --date 2027-03-15
-python3 skills/flight-search/scripts/ktemia.py results <searchToken>
-python3 skills/flight-search/scripts/ktemia.py details <searchToken> <flight id>
+
+python3 skills/car-search/scripts/ktemia.py locations "Lisbon" --type airport
+python3 skills/car-search/scripts/ktemia.py search --pickup LOCATION_ID --pickup-date 2027-03-10 --dropoff-date 2027-03-17
+
+python3 skills/hotel-search/scripts/ktemia.py locations "London"
+python3 skills/hotel-search/scripts/ktemia.py search --location LOCATION_ID --checkin 2027-03-10 --checkout 2027-03-12
+python3 skills/hotel-search/scripts/ktemia.py reviews HOTEL_ID
 ```
+
+`results` and `details` take the `searchToken` the search command prints. Pass a hotel id to `reviews`; that call does not need a token.
 
 ## Learn more
 
-- [Flight search API reference](https://www.ktemia.com/docs/api/) — every field and error, with code in cURL, Python, Node, Go, Java, Ruby, and PHP
-- [Search airports](https://www.ktemia.com/docs/api/flights/airports/) · [Search flights](https://www.ktemia.com/docs/api/flights/search/) · [List results](https://www.ktemia.com/docs/api/flights/results/) · [Flight details](https://www.ktemia.com/docs/api/flights/details/)
-- [What a flight search API is, and what it is not](https://www.ktemia.com/blog/flight-search-api/)
+- [API reference](https://www.ktemia.com/docs/api/) — every field and error, with code in cURL, Python, Node, Go, Java, Ruby, and PHP
+- [Flights](https://www.ktemia.com/docs/api/flights/search/) · [Cars](https://www.ktemia.com/docs/api/cars/search/) · [Hotels](https://www.ktemia.com/docs/api/hotels/search/)
 - [Flights in Cursor and Claude: MCP, skills, and instructions](https://www.ktemia.com/blog/flights-mcp/)
-- [Why there is no official Google Flights API](https://www.ktemia.com/blog/google-flights-api/)
-- [Amadeus API vs Skyscanner API, after the Amadeus self-service shutdown](https://www.ktemia.com/blog/amadeus-api-vs-skyscanner-api/)
-- [Kiwi Tequila API compared](https://www.ktemia.com/blog/kiwi-tequila-api/)
-- [We compared 1,703 flights across 57 booking sites](https://www.ktemia.com/blog/flight-price-spread/)
 
 ## About Ktemia
 
-[Ktemia](https://www.ktemia.com/) is a search and compare platform for flights, with stays, cars, and homes to follow. Use it in the [dashboard](https://www.ktemia.com/product/), through the [API](https://www.ktemia.com/docs/api/), or with the AI copilot. More guides are on the [blog](https://www.ktemia.com/blog/).
+[Ktemia](https://www.ktemia.com/) is a search and compare platform for flights, hotels, and cars, with homes to follow. Use it in the [dashboard](https://www.ktemia.com/product/), through the [API](https://www.ktemia.com/docs/api/), or with the AI copilot. More guides are on the [blog](https://www.ktemia.com/blog/).
 
 ## License
 

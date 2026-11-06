@@ -1,6 +1,6 @@
 {
   "name": "ktemia",
-  "description": "Ktemia flight search skill for Claude Code.",
+  "description": "Ktemia skills for flights, rental cars, and hotels.",
   "owner": {
     "name": "Ktemia",
     "email": "contact@ktemia.com",
@@ -10,9 +10,9 @@
     {
       "name": "ktemia",
       "source": "./",
-      "description": "Search and compare flights with the Ktemia flight search API.",
+      "description": "Search and compare flights, rental cars, and hotels with the Ktemia API.",
       "category": "travel",
-      "tags": ["flights", "travel", "api"]
+      "tags": ["flights", "cars", "hotels", "travel", "api"]
     }
   ]
 }
