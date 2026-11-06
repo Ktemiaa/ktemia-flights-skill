@@ -2,6 +2,7 @@
 """Minimal client for the Ktemia flight search API. Standard library only.
 
     ktemia.py airports QUERY [--country CC]
+    ktemia.py airlines QUERY [--country CC]
     ktemia.py search --origin LIS --destination LHR --date 2027-03-15 [options]
     ktemia.py search --leg LIS:BCN:2027-04-02 --leg BCN:FCO:2027-04-06
     ktemia.py results TOKEN
@@ -120,6 +121,10 @@ def main():
     p.add_argument("query")
     p.add_argument("--country")
 
+    p = sub.add_parser("airlines", help="look up 2-character airline codes")
+    p.add_argument("query")
+    p.add_argument("--country")
+
     p = sub.add_parser("search", help="start a flight search; returns a searchToken")
     p.add_argument("--origin")
     p.add_argument("--destination")
@@ -147,6 +152,8 @@ def main():
     args = parser.parse_args()
     if args.command == "airports":
         out = call("GET", "/flights/airports", {"query": args.query, "country": args.country})
+    elif args.command == "airlines":
+        out = call("GET", "/flights/airlines", {"query": args.query, "country": args.country})
     elif args.command == "search":
         if not args.leg and not (args.origin and args.destination and args.date):
             parser.error("search needs --origin, --destination and --date, or two or more --leg")

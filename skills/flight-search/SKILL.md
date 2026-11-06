@@ -31,6 +31,14 @@ python3 scripts/ktemia.py airports "Lisbon"
 - Use `code` from the match the user meant. `allAirports: true` means the code covers every airport in that city.
 - If several places match (for example `austin` returns Austin, Texas; Austin, Nevada; and Austin-Straubel in Green Bay), **ask which one**. Do not take the first match.
 
+If the user names an airline (“only Delta”), look up the code before you search. `airlines` takes 2-character codes, not names:
+
+```bash
+python3 scripts/ktemia.py airlines "Delta"
+```
+
+Send `code` (`DL`). If several airlines match, ask which one.
+
 ### 2. Start the search
 
 One-way or round trip:
