@@ -1,6 +1,6 @@
 ---
 name: flight-search
-description: Search and compare flights with the Ktemia flight search API — one-way, round trip, or multi-city — and return fares from each seller with booking links. Use when the user asks to find, compare, or price flights between places on specific dates, or to look up an airport or city code. Asks for missing details instead of guessing.
+description: Search and compare flights with the Ktemia flight search API - one-way, round trip, or multi-city - and return fares from each seller with booking links. Use when the user asks to find, compare, or price flights between places on specific dates, or to look up an airport or city code. Asks for missing details instead of guessing.
 ---
 
 # Flight search with the Ktemia API

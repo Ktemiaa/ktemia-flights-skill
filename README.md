@@ -2,11 +2,11 @@
 
 Agent skills that search and compare flights, rental cars, and hotels with the [Ktemia](https://www.ktemia.com/) [API](https://www.ktemia.com/docs/api/). Ask in plain language. The agent looks up the place, runs the search, and returns each seller's price with a booking link.
 
-| Skill | Use it for | Reference |
-| --- | --- | --- |
+| Skill           | Use it for                                | Reference                                                  |
+| --------------- | ----------------------------------------- | ---------------------------------------------------------- |
 | `flight-search` | One-way, round trip, and multi-city fares | [Flights](https://www.ktemia.com/docs/api/flights/search/) |
-| `car-search` | A hire at a city or airport | [Cars](https://www.ktemia.com/docs/api/cars/search/) |
-| `hotel-search` | A stay, plus guest reviews | [Hotels](https://www.ktemia.com/docs/api/hotels/search/) |
+| `car-search`    | A hire at a city or airport               | [Cars](https://www.ktemia.com/docs/api/cars/search/)       |
+| `hotel-search`  | A stay, plus guest reviews                | [Hotels](https://www.ktemia.com/docs/api/hotels/search/)   |
 
 Each skill asks when a place or a date is missing, instead of guessing. Ktemia compares prices. It does not book the ticket, the car, or the room. The traveller books on the seller's site.
 
@@ -107,7 +107,7 @@ python3 skills/hotel-search/scripts/ktemia.py reviews HOTEL_ID
 
 ## Learn more
 
-- [API reference](https://www.ktemia.com/docs/api/) — every field and error, with code in cURL, Python, Node, Go, Java, Ruby, and PHP
+- [API reference](https://www.ktemia.com/docs/api/) - every field and error, with code in cURL, Python, Node, Go, Java, Ruby, and PHP
 - [Flights](https://www.ktemia.com/docs/api/flights/search/) · [Cars](https://www.ktemia.com/docs/api/cars/search/) · [Hotels](https://www.ktemia.com/docs/api/hotels/search/)
 - [Flights in Cursor and Claude: MCP, skills, and instructions](https://www.ktemia.com/blog/flights-mcp/)
 
